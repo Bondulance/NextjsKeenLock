@@ -25,7 +25,7 @@ const formSchema = z.object({
     .string()
     .min(10, { message: "Description must be at least 10 characters" })
     .max(100),
-  file: z.string().min(1, { message: "File must be at least one character" }),
+  file: z.string().min(0),
 });
 
 const Project = () => {
@@ -58,6 +58,29 @@ const Project = () => {
       setisSubmitting(false);
     }
   }
+
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileChange = (event: any) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
+    try {
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+      // Handle response
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
+  };
 
   return (
     <Form {...form}>
@@ -104,17 +127,17 @@ const Project = () => {
         />
         <FormField
           control={form.control}
-          name="description"
+          name="file"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Description<span className="text-orange-500">*</span>
+                File<span className="text-orange-500">*</span>
               </FormLabel>
               <FormControl>
                 <Input
+                  onChange={handleFileChange}
+                  type="file"
                   className="no-focus border-blue-100"
-                  placeholder="Description"
-                  {...field}
                 />
               </FormControl>
 

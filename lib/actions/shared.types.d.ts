@@ -4,3 +4,7 @@ export interface CreateProjectParams {
   file: string;
   path: string;
 }
+
+export interface ProjectbyIDParams {
+  projectId: string;
+}

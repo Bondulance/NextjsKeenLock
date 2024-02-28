@@ -49,6 +49,7 @@ const Page = async () => {
               key={project.id}
               id={project.id}
               title={project.title}
+              file={project.file}
               description={project.description}
             />
           ))}

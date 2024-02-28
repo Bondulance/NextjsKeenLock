@@ -2,7 +2,7 @@
 import Project from "@/database/project.model";
 import { connectToDatabase } from "../mongoose";
 import { revalidatePath } from "next/cache";
-import { CreateProjectParams } from "./shared.types";
+import { CreateProjectParams, ProjectbyIDParams } from "./shared.types";
 
 export async function createProject(params: CreateProjectParams) {
   try {
@@ -34,6 +34,21 @@ export async function getProjects() {
     const totalProjects = await Project.countDocuments();
 
     return { projects, totalProjects };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getProjectsbyId(params: ProjectbyIDParams) {
+  try {
+    connectToDatabase();
+
+    const { projectId } = params;
+
+    const project = await Project.findById(projectId);
+
+    return project;
   } catch (error) {
     console.log(error);
     throw error;

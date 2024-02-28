@@ -1,13 +1,15 @@
 import Link from "next/link";
 import React from "react";
+import { Button } from "../ui/button";
 
 interface Props {
   title: string;
   description: string;
   id: number;
+  file: string;
 }
 
-const ProjectCard = ({ title, description, id }: Props) => {
+const ProjectCard = ({ title, description, file, id }: Props) => {
   return (
     <Link href={`question/${id}`} className="cursor-pointer">
       <div className="h-[150px] w-[200px] rounded-xl bg-slate-100 shadow-md">
